@@ -1,11 +1,9 @@
 # base_page.py
-
 from appium.webdriver.webdriver import WebDriver
-
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import os
+
 
 
 class BasePage:
@@ -13,18 +11,18 @@ class BasePage:
         self.driver = driver
         self.wait = WebDriverWait(self.driver, 10)
 
-    def hacer_clic(self, locator: tuple):
+    def click(self, locator: tuple):
         try:
-            elemento = self.wait.until(EC.element_to_be_clickable(locator))
-            elemento.click()
+            element = self.wait.until(EC.element_to_be_clickable(locator))
+            element.click()
         except TimeoutException:
-            raise Exception(f" Error del Framework: Pasaron 10 segundos y no se pudo dar clic en {locator}") from None
+            raise Exception(f" Framework Error: 10 seconds passed and it could not be clicked. {locator}") from None
 
-    def obtener_texto(self, locator: tuple) -> str:
-        elemento = self.wait.until(EC.visibility_of_element_located(locator))
-        return elemento.text
+    def get_text(self, locator: tuple) -> str:
+        element = self.wait.until(EC.visibility_of_element_located(locator))
+        return element.text
 
-    def elemento_existe(self, locator: tuple) -> bool:
+    def element_exists(self, locator: tuple) -> bool:
         return len(self.driver.find_elements(*locator)) > 0
 
     def go_back(self):

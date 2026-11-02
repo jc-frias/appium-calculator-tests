@@ -27,15 +27,15 @@ def pytest_runtest_makereport(item, call):
     report = outcome.get_result()
     if report.when == "call" and report.failed:
         driver = item.funcargs["driver"]
-        nombre = f"{item.name}.png"
+        file_name = f"{item.name}.png"
         os.makedirs("Screenshot_Tests", exist_ok=True)
-        ruta = os.path.join("Screenshot_Tests", nombre)
-        driver.save_screenshot(ruta)
+        path = os.path.join("Screenshot_Tests", file_name)
+        driver.save_screenshot(path)
 
-        foto = driver.get_screenshot_as_base64()
-        lista_extras = getattr(report, "extras", [])
-        lista_extras.append(extras.png(foto))
-        report.extras = lista_extras
+        screenshot_base64 = driver.get_screenshot_as_base64()
+        extra_items = getattr(report, "extras", [])
+        extra_items.append(extras.png(screenshot_base64))
+        report.extras = extra_items
 
-        print(f"Foto guardada en {ruta}")
+        print(f"Screenshot saved in {path}")
 

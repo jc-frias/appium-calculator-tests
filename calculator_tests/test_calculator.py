@@ -6,7 +6,7 @@ from calculator_page import CalculatorPage
 @pytest.mark.parametrize("first, second, expected",
                          [(25,55,80),
                           (1,1,2),
-                          (0,0,0)])
+                          (1,0,0)])
 def test_calculator(driver, first, second, expected):
     calculator_page = CalculatorPage(driver)
 
