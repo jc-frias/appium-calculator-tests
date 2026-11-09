@@ -3,6 +3,7 @@ import requests
 import pytest
 
 USERS_URL = "https://jsonplaceholder.typicode.com/users/"
+POST_URL = "https://jsonplaceholder.typicode.com/posts/"
 
 @pytest.mark.parametrize("user, expected_code",
                          [(1,200),
@@ -16,24 +17,25 @@ def test_user_response(user, expected_code):
     status_code = response.status_code
     assert status_code == expected_code, f"Unexpected status code, got: {status_code}; Expected {expected_code}"
 
-
-"""
-def test_web_response_and_data():
-    response = requests.get("https://jsonplaceholder.typicode.com/users/1")
+def test_data_send():
+    data = {"title": "mi primer post", "body": "probando", "userId": 1}
+    response = requests.post(POST_URL, json=data)
     status_code = response.status_code
-    print(f"\n{status_code}")
-    assert status_code == 200, f"Unexpected status code, got: {status_code}; Expected 200"
+    print(status_code)
+    expected_code = 201
+    assert status_code == expected_code, f"Unexpected code response, got: {status_code}; Expected: {expected_code}"
+    post_info = response.json()
+    title = post_info["title"]
 
-    web_info = response.json()
-    name = web_info["name"]
-    print(name)
-    assert name == "Leanne Graham", f"Name does not match, got: {name}; Expected: Leanne Graham"
+    assert title == data["title"], f"Unexpected title, got: {title}; Expected: {data['title']}"
+    assert "id" in post_info, "Response does not include the post id"
 
-
-
-def test_user_not_found():
-    response = requests.get("https://jsonplaceholder.typicode.com/users/9999")
+@pytest.mark.parametrize("data",
+                         [({}),({"title": 123}), ({"title":"abc"*1000})])
+@pytest.mark.xfail(reason="Test site, negative responses are not applicable", strict=True)
+def test_negative_responses(data):
+    negative_codes = [400, 401, 403, 404, 422]
+    response = requests.post(POST_URL, json=data)
     status_code = response.status_code
-    print(f"\n{status_code}")
-    assert status_code == 404, f"Unexpected status code, got: {status_code}; Expected 404"
-"""
+    print(status_code)
+    assert status_code in negative_codes, f"Site is accepting invalid info, got: {status_code}; Expected: {negative_codes}"
