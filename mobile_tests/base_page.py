@@ -11,7 +11,7 @@ class BasePage:
         self.driver = driver
         self.wait = WebDriverWait(self.driver, 10)
 
-    def click(self, locator: tuple):
+    def click_element(self, locator: tuple):
         try:
             element = self.wait.until(EC.element_to_be_clickable(locator))
             element.click()

@@ -7,6 +7,8 @@ ELEMENT_CLICKABLE = "com.saucelabs.mydemoapp.android:id/productIV"
 PRODUCTS = (AppiumBy.ID, ELEMENT_CLICKABLE)
 ELEMENT_TEXT = "com.saucelabs.mydemoapp.android:id/titleTV"
 PRODUCTS_NAME = (AppiumBy.ID, ELEMENT_TEXT)
+CART_RESOURCE_ID = "com.saucelabs.mydemoapp.android:id/cartIV"
+CART_ELEMENT = (AppiumBy.ID, CART_RESOURCE_ID)
 
 
 class CatalogPage(BasePage):
@@ -23,3 +25,6 @@ class CatalogPage(BasePage):
         names = self.get_elements(PRODUCTS_NAME)
         name = names[index]
         return name.text
+
+    def open_cart(self):
+        self.click_element(CART_ELEMENT)

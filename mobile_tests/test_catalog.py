@@ -5,6 +5,7 @@ from catalog_page import CatalogPage
 from product_details_page import ProductDetailsPage
 
 
+
 @pytest.mark.parametrize("index",[0,
                                   pytest.param(1, marks=pytest.mark.xfail(
                                       reason="App crashes when opening second item", strict=True)),
