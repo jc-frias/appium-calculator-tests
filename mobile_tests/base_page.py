@@ -27,3 +27,7 @@ class BasePage:
 
     def go_back(self):
         self.driver.back()
+
+    def get_elements(self, locator: tuple):
+        elements = self.wait.until(EC.presence_of_all_elements_located(locator))
+        return elements

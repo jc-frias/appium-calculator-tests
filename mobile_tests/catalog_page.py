@@ -1,3 +1,4 @@
+
 from appium.webdriver.common.appiumby import AppiumBy
 from base_page import BasePage
 from appium.webdriver.webdriver import WebDriver
@@ -14,11 +15,11 @@ class CatalogPage(BasePage):
 
 
     def open_product(self, index):
-        products = self.driver.find_elements(*PRODUCTS)
+        products = self.get_elements(PRODUCTS)
         product = products[index]
         product.click()
 
     def get_product_name(self, index):
-        names = self.driver.find_elements(*PRODUCTS_NAME)
+        names = self.get_elements(PRODUCTS_NAME)
         name = names[index]
         return name.text
